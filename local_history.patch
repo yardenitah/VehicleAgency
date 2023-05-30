@@ -1,0 +1,33 @@
+Index: Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Main.java b/Main.java
+--- a/Main.java	
++++ b/Main.java	(date 1683799092803)
+@@ -1,7 +1,7 @@
+ //  Name : yarden itah     ID : 315097527
+ //  Name : Roei Zaburoff   ID : 205685555
+ 
+-package Vehicless;
++package ehicless;
+ import Graphic.MyFrame;
+ import java.util.Scanner;
+ 
+Index: Vehicles.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Vehicles.java b/Vehicles.java
+--- a/Vehicles.java	
++++ b/Vehicles.java	(date 1683799165421)
+@@ -25,6 +25,7 @@
+     protected  int maxOfPassengers;
+     protected  int maxSpeed;
+     protected  String model;
++
+     private ImageIcon vehiclesImage;
+     public void setVehiclesImage(ImageIcon vehiclesImage){
+         this.vehiclesImage.setImage(vehiclesImage.getImage());
