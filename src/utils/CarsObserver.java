@@ -1,9 +1,10 @@
 package utils;
 
-import Vehicless.Vehicles;
+import vehicless.Vehicle;
 
 import java.util.List;
+import java.util.Vector;
 
 public interface CarsObserver {
-    public void update(Vehicles vehicle, List<Vehicles> list, int index);
+    public void update(Vehicle vehicle, Vector<Vehicle> VehicleList, int index);
 }
