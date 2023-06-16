@@ -1,10 +1,9 @@
 package graphic;
 
-import vehicless.Vehicle;
+import vehicles.Vehicle;
 import utils.CarsObserver;
 
 import javax.swing.*;
-import java.util.List;
 import java.util.Vector;
 
 public class BuyVehicleFrame extends JFrame implements CarsObserver {

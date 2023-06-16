@@ -1,8 +1,7 @@
 package utils;
 
-import vehicless.Vehicle;
+import vehicles.Vehicle;
 
-import java.util.List;
 import java.util.Vector;
 
 public interface CarsObserver {
