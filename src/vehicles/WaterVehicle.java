@@ -1,6 +1,7 @@
 package vehicles;
 
 import javax.swing.*;
+import java.lang.reflect.Method;
 
 
 public  class WaterVehicle extends Vehicle implements iWaterVehicle {
@@ -13,12 +14,6 @@ public  class WaterVehicle extends Vehicle implements iWaterVehicle {
     protected float AverageConsumption;
     protected boolean withTheWind;
     protected String countryFlag;
-    private ImageIcon countryFlagImage;
-    public static boolean waterVehicleBusy = false;
-    public ImageIcon getCountryFlagImage() {
-        return this.countryFlagImage;
-    }
-
     public void setCountryFlag(String countryFlag) {
         this.countryFlag = countryFlag;
     }
@@ -37,10 +32,10 @@ public  class WaterVehicle extends Vehicle implements iWaterVehicle {
         if (this.withTheWind)  str2 = "with the wind";
         else  str2 = "against the wind";
         String res = str + "\n " + str2;
-//        String str3 = super.currentStatus();
-//        return res+"\n"+str3;
         return res+"\n";
     }
+
+
 
 
 }

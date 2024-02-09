@@ -6,16 +6,15 @@ import java.util.concurrent.Executors;
 
 public class MainWindowSingleton { // singleton DP
     private static volatile MainWindowSingleton instance = null;
-    private volatile MyFrame myFrame;
-
-    public MyFrame getMyFrame() {
-        return myFrame;
-    }
-
+    private volatile MyFrame myFrame = null;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private MainWindowSingleton() {
         // Private constructor
+    }
+
+    public MyFrame getMyFrame() {
+        return myFrame;
     }
 
     private void initializeMyFrame() {

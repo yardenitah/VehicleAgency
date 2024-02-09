@@ -19,7 +19,6 @@ public class GetInformationFromTheUser {
         JButton colorButton = new JButton("Choose Color");
         box.add(colorButton);
 
-        JColorChooser colorChooser = new JColorChooser();
         final Color[] selectedColor = new Color[1];
         JPanel colorPanel = new JPanel();
         colorPanel.setSize(1, 1);

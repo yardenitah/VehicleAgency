@@ -14,15 +14,12 @@ public class AirVehicle extends Vehicle implements iAirVehicle {
     }
     public  String toString() {
         String str = ("traveled:"+this.kilometers+"\n average life span: "+this.averageLifeSpan+"\n Max speed:"+this.maxSpeed+" Mph"+"\n can carry max of people:"+this.maxOfPassengers);
-//        String str2 = super.currentStatus();
-//        return str+"\n"+str2;
         return str+"\n";
     }
 
     protected float averageLifeSpan;
     protected boolean military;
     protected boolean civilian;
-    public static boolean airVehicleBusy = false;
 
     public  String militaryOrCivilian(boolean military, boolean civilian) {
         if (military && civilian)

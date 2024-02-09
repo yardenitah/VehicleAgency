@@ -4,10 +4,11 @@ import utils.CarsObserver;
 import utils.globalKilometerObserver;
 
 import javax.swing.*;
+import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle implements Ivehicle {
+public abstract class Vehicle  implements Ivehicle {
     public Vehicle() {
         kilometers = 0;
         maxKilometers = 0;
@@ -40,13 +41,17 @@ public abstract class Vehicle implements Ivehicle {
     private boolean imageSelected;
     protected ImageIcon vehiclesImage;
     protected boolean onBuyingProcess;
+    
 
 
+    static class Spoon{
+
+    }
     public static void registerObserver(globalKilometerObserver observer) {
         kmObservers.add(observer);
     }
 
-    private static void notifyKmObservers() {  // Notify all registered observers
+    private static  void notifyKmObservers() {  // Notify all registered observers
         for (globalKilometerObserver kmObserver : kmObservers) {
             kmObserver.update(globalKilometer);
         }
@@ -66,14 +71,6 @@ public abstract class Vehicle implements Ivehicle {
         notifyKmObservers();
     }
 
-    public boolean getImageSelected() {
-        return imageSelected;
-    }
-
-    public void setImageSelected(boolean imageSelected) {
-        this.imageSelected = true;
-    }
-
     public Boolean getOnTestDrive() {
         return this.onTestDrive;
     }
@@ -81,8 +78,6 @@ public abstract class Vehicle implements Ivehicle {
     public void setOnTestDrive(boolean onTestDrive) {
         this.onTestDrive = onTestDrive;
     }
-
-
 
     @Override
     public Vehicle makeVehicle(){
@@ -137,7 +132,10 @@ public abstract class Vehicle implements Ivehicle {
         this.maxSpeed = maxSpeed;
     }
 
+
     public abstract boolean equals(Object anObj);
 
     public abstract String toString();
 }
+
+

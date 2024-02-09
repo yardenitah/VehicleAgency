@@ -31,7 +31,7 @@ public class MyFrame implements ActionListener ,Runnable {
     private final ButtonGroup flagButtonGroup;
     private  JButton menuButton;
     private static JMenuItem currentInventoryReportBtn;
-    private final Vector<Vehicle> vehicleList;
+    private final Vector<Ivehicle> vehicleList;
     private Thread buyTrd, testDriveTrd, addVehicleTrd, resetKmTrd, flagTrd, inventory;
     private final ImageIcon vehiclesImage;
     private final Map<String, Boolean> addImageMap;
@@ -49,7 +49,7 @@ public class MyFrame implements ActionListener ,Runnable {
     private static final int width = 800;
     private static final int height = 600;
 
-    public MyFrame() {
+     public  MyFrame() {
         this.vehicleList = new Vector<>(); // changed to  Vector for working threads safely
         vehiclesImage = new ImageIcon();
         flagButtonGroup = new ButtonGroup();
@@ -75,7 +75,7 @@ public class MyFrame implements ActionListener ,Runnable {
 
         addImageMap = new HashMap<>();
         globalKmText = new JTextField();
-        testDrivePool = Executors.newFixedThreadPool(2);
+        testDrivePool = Executors.newFixedThreadPool(7);
         getInfo = new GetInformationFromTheUser();
     }
 
@@ -102,7 +102,7 @@ public class MyFrame implements ActionListener ,Runnable {
         backgroundLabel.add(buyVehicles);
         buyVehicles.addActionListener(e -> {
             if (vehicleListIsNotEmpty()) {
-                buyTrd = new Thread(() -> openBuyVehiclesWindow());
+                buyTrd = new Thread(this::openBuyVehiclesWindow);
                 buyTrd.start();
             }
 
@@ -168,7 +168,7 @@ public class MyFrame implements ActionListener ,Runnable {
         saveBtn.setBounds(55, 480, 80, 40);
         backgroundLabel.add(saveBtn);
         saveBtn.addActionListener(e -> {
-            saveState();
+            saveState(); 
         });
 
         JButton loadState = new JButton("Load last state");
@@ -193,6 +193,7 @@ public class MyFrame implements ActionListener ,Runnable {
                 JOptionPane.showMessageDialog(null, "The current state has been saved successfully");
             }
         } else JOptionPane.showMessageDialog(null, "No changes were made");
+
     }
 
     private void loadLastState(){
@@ -358,7 +359,7 @@ public class MyFrame implements ActionListener ,Runnable {
             String actionCommand = buttonGroup.getSelection().getActionCommand(); // Get the action command of the selected radio button
             int index = Integer.parseInt(actionCommand); // Convert the action command to an integer index
             VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) vehicleList.get(index);
-            Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+            Vehicle vehicle = (Vehicle) vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
             if (vehicle.getOnTestDrive()) {
                 int option = JOptionPane.showConfirmDialog(null, "This vehicle is on a test drive. Would you like to wait for him to return to complete the purchase?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
@@ -413,7 +414,7 @@ public class MyFrame implements ActionListener ,Runnable {
             String actionCommand = buttonGroup.getSelection().getActionCommand(); // Get the action command of the selected radio button
             int index = Integer.parseInt(actionCommand); // Convert the action command to an integer index
             VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) vehicleList.get(index);
-            Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+            Vehicle vehicle = (Vehicle) vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
             if (vehicle.getOnTestDrive()) {
                 JOptionPane.showMessageDialog(null, "This vehicle is already on a test drive");
                 return;
@@ -540,7 +541,11 @@ public class MyFrame implements ActionListener ,Runnable {
             JOptionPane.showMessageDialog(null, "No vehicle in stock");
         } else {
             Vehicle.setGlobalKilometer(0);
-            for (Vehicle vehicle : vehicleList) vehicle.setKm(0);
+//            for (Vehicle vehicle : vehicleList) vehicle.setKm(0);
+            for (int i = 0 ; i < vehicleList.size(); ++i) {
+                Vehicle vehicles = (Vehicle) vehicleList.get(i);
+                vehicles.setKm(0);
+            }
             int sleepTime = (int) (Math.random() * 3) + 5;
             try {
                 Thread.sleep(100L * sleepTime); // Sleep the thread for the entered distance multiplied by 100
@@ -609,9 +614,9 @@ public class MyFrame implements ActionListener ,Runnable {
             }
             if (selectedButton != null) {  // If a radio button is selected, set the flags for all water vehicles
                 E_country selectedCountry = E_country.valueOf(selectedButton.getText());
-                for (Vehicle value : vehicleList) {
-                    VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) value; // value is like vehicleList[i]
-                    Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+                for (Ivehicle value : vehicleList) {
+                    VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) value;
+                    Vehicle vehicle = (Vehicle) vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
                     if ((vehicle instanceof WaterVehicle)) {
                         ((WaterVehicle) vehicle).setCountryFlag(selectedCountry.name());
                         flag[0] = true;
@@ -660,7 +665,7 @@ public class MyFrame implements ActionListener ,Runnable {
         AtomicInteger counter = new AtomicInteger(0);
         for (int i = 0; i < vehicleList.size(); ++i) {
             VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) vehicleList.get(i);
-            Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+            Ivehicle vehicle =  vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
             if (vehicle instanceof LandVehicle || vehicle instanceof iLandVehicle) {
                 counter.incrementAndGet();
                 flag = true;
@@ -669,7 +674,7 @@ public class MyFrame implements ActionListener ,Runnable {
                 radioButton.setActionCommand(Integer.toString(i)); // Set action command to the index of the vehicle in the array
                 buttonGroup.add(radioButton); // Add the radio button to the ButtonGroup
                 JLabel imageLabel = new JLabel(imageIcon);
-                String tooltipText = vehicleColorAndStatusDecorator.toString(); // Store tooltip text in final variable
+                String tooltipText =  vehicleColorAndStatusDecorator.toString(); // Store tooltip text in final variable
                 imageLabel.setToolTipText(tooltipText); // Set tooltip text when mouse enters label
                 vehicleColorAndStatusDecorator.setTooltipObservable(imageLabel);
 
@@ -700,7 +705,7 @@ public class MyFrame implements ActionListener ,Runnable {
         AtomicInteger cont = new AtomicInteger(0);
         for (int i = 0; i < vehicleList.size(); ++i) {
             VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) vehicleList.get(i);
-            Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+            Vehicle vehicle = (Vehicle) vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
             if (vehicle instanceof AirVehicle || vehicle instanceof iAirVehicle) {
                 cont.incrementAndGet(); // like ++
                 flag = true;
@@ -740,7 +745,7 @@ public class MyFrame implements ActionListener ,Runnable {
         AtomicInteger cont = new AtomicInteger(0);
         for (int i = 0; i < vehicleList.size(); ++i) {
             VehicleColorAndStatusDecorator vehicleColorAndStatusDecorator = (VehicleColorAndStatusDecorator) vehicleList.get(i);
-            Vehicle vehicle = vehicleColorAndStatusDecorator.getDecoratedVehicle();
+            Vehicle vehicle = (Vehicle) vehicleColorAndStatusDecorator.makeVehicleDecorated().first;
             if (vehicle instanceof WaterVehicle || vehicle instanceof iWaterVehicle) {
                 cont.incrementAndGet();
                 flag = true;
@@ -848,7 +853,7 @@ public class MyFrame implements ActionListener ,Runnable {
         return this.menuPanel;
     }
 
-    public Vector<Vehicle> getArrayList() {
+    public Vector<Ivehicle> getArrayList() {
         return this.vehicleList;
     }
     public ImageIcon getVehiclesImage() {

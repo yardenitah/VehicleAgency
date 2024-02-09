@@ -1,12 +1,12 @@
 package utils;
 
-import vehicles.Vehicle;
+import vehicles.Ivehicle;
 import java.util.Vector;
 
 public class Originator {
-    private  Vector<Vehicle> vehicleList;
+    private  Vector<Ivehicle> vehicleList;
 
-    public void setState(Vector<Vehicle> state){
+    public void setState(Vector<Ivehicle> state){
         this.vehicleList = state;
     }
 

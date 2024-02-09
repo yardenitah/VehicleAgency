@@ -1,6 +1,10 @@
 package vehicles;
 
 public class LandVehicle extends Vehicle implements iLandVehicle {
+    protected final int numOfWheels;
+    protected final String subModel;
+    protected boolean dirt;
+    protected boolean road;
 
     public LandVehicle(String model, String subModel, int kilometers,  int maxKilometers, int maxOfPassengers,  int maxSpeed, boolean dirt,  boolean road, int numOfWheels){
         super(model, kilometers, maxKilometers, maxOfPassengers,  maxSpeed);
@@ -18,17 +22,9 @@ public class LandVehicle extends Vehicle implements iLandVehicle {
     }
     public  String toString() {
         String str = ("\n Model:"+this.model+"\n Sub Model:"+this.subModel+"\n traveled:"+this.kilometers+" km "+"\n max kilometer:" +this.maxKilometers+"\n Max speed:"+this.maxSpeed+" Mph"+"\n can carry max of people:"+this.maxOfPassengers+"\n road type: "+this.roadType());
-//        String str2 = super.currentStatus();
-//        return str+"\n"+str2;
         return str+"\n";
     }
-    protected final int numOfWheels;
-    protected final String subModel;
-    protected boolean dirt;
 
-    public static boolean landVehicleBusy = false;
-
-    protected boolean road;
     public String roadType() {
         String str;
         if (this.dirt && this.road)

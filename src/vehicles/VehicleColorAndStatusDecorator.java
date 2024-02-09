@@ -1,4 +1,5 @@
 package vehicles;
+import utils.Tuple;
 import utils.VehicleStatusObserver;
 
 import javax.swing.*;
@@ -8,27 +9,26 @@ import java.util.List;
 import static vehicles.VehicleColorAndStatusDecorator.currentStatus.IN_STOCK;
 public class VehicleColorAndStatusDecorator extends VehicleDecorator implements VehicleStatusObserver {
     protected Color color;
+    private currentStatus status;
 
-    public static enum currentStatus{
+    private final List<JLabel> tooltipObservable;
+
+    public enum currentStatus{
         ON_TEST_DRIVE, IN_STOCK, ON_BUYING_PROCESS
     }
-    currentStatus status;
 
-    private List<JLabel> tooltipObservable;
 
-    public void setTooltipObservable(JLabel tooltipObservable) {
-        this.tooltipObservable.add(tooltipObservable);
-    }
-
-    public VehicleColorAndStatusDecorator(Vehicle vehicle, Color color) {
-        super(vehicle);
+    public VehicleColorAndStatusDecorator(Ivehicle decoratedVehicle, Color color) {
+        super(decoratedVehicle);
         this.color = color;
         status = IN_STOCK;
         tooltipObservable = new ArrayList<>();
     }
-
-    public currentStatus getStatus() {
-        return status;
+    public void setTooltipObservable(JLabel tooltipObservable) {
+        this.tooltipObservable.add(tooltipObservable);
+    }
+    public Tuple<Ivehicle, Color> makeVehicleDecorated() {
+        return new Tuple<>(this.decoratedVehicle.makeVehicle(), this.color);
     }
 
     public Color getColor() {
@@ -36,13 +36,13 @@ public class VehicleColorAndStatusDecorator extends VehicleDecorator implements 
     }
 
     @Override
-    public boolean equals(Object anObj) {
-        return getDecoratedVehicle().equals(anObj);
+    public String toString() {
+        return decoratedVehicle.toString() +"\n Current status at the agency:" +status.name();
     }
 
     @Override
-    public String toString() {
-        return getDecoratedVehicle().toString() +"\n Current status at the agency:" +status.name();
+    public ImageIcon getVehiclesImage() {
+        return decoratedVehicle.makeVehicle().getVehiclesImage();
     }
 
     @Override
@@ -51,6 +51,4 @@ public class VehicleColorAndStatusDecorator extends VehicleDecorator implements 
         tooltipObservable.forEach(lable -> lable.setToolTipText(this.toString()));
         notifyAll();
     }
-
-
 }

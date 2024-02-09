@@ -4,7 +4,7 @@ import vehicles.*;
 
 public class LandVehiclesFactory implements AbstractFactory {
     @Override
-    public Vehicle create(int type, String... args) {
+    public  Vehicle create(int type, String... args) {
         Vehicle vehicle = null;
         switch (type) {
             case 0 -> { // Jeep

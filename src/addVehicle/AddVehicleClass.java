@@ -45,9 +45,9 @@ public class AddVehicleClass {
     protected final Map<String, Boolean> addImageMap;
     protected final ImageIcon vehiclesImage;
     private final JPanel panel;
-    private final Vector<Vehicle> vehicleList;
+    private final Vector<Ivehicle> vehicleList;
 
-    public AddVehicleClass(JPanel panel, Vector<Vehicle> vehicleList) {
+    public AddVehicleClass(JPanel panel, Vector<Ivehicle> vehicleList) {
         this.addImageMap = new HashMap<>();
         addImageMap.put(Thread.currentThread().getName(), false);
         this.vehiclesImage = new ImageIcon();
@@ -170,7 +170,6 @@ public class AddVehicleClass {
         tmpLabel.setForeground(Color.WHITE);
         tmpLabel.setBackground(Color.cyan);
         tmpLabel.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
-
         switch (index) {
             case 0 -> { // Jeep
                 tmpLabel.setText("enter Jeep data :");
@@ -200,7 +199,6 @@ public class AddVehicleClass {
                 boxContainer.add(addPicture());
 
                 List<JTextField> holderTextDataList = new ArrayList<>(Arrays.asList(textAndBoxModel.first, textAndBoxSubModel.first, textAndBoxMaxKm.first, textAndBoxMaxSpeed.first, textAndBoxAvgCon.first, textAndBoxLifeSpan.first));
-
 
                 boxContainer.add(addVehicleBtn(VehicleType.Jeep, holderTextDataList, panel, null, btnAndColor.second)); // creat this object
                 panel.add(boxContainer, BorderLayout.CENTER);
@@ -489,7 +487,7 @@ public class AddVehicleClass {
                             boolean windDirection = optionalParams.second.second;
                             Frigate frigate = (Frigate) FactoryProvider.getFactory(WATER_VEHICLE).create(FRIGATE, vehicleDataList.get(0).getText(), "0", vehicleDataList.get(1).getText(), vehicleDataList.get(2).getText(), vehicleDataList.get(3).getText(), String.valueOf(windDirection));
                             frigate.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(frigate, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(frigate, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the Frigate");
                             addVehicleBox(panel);
@@ -505,7 +503,7 @@ public class AddVehicleClass {
                         else {
                             CruiseShip cruiseShip = (CruiseShip) FactoryProvider.getFactory(WATER_VEHICLE).create(CRUISE_SHIP, vehicleDataList.get(0).getText(), "0", vehicleDataList.get(1).getText(), vehicleDataList.get(2).getText(), vehicleDataList.get(3).getText(), vehicleDataList.get(5).getText(), vehicleDataList.get(4).getText());
                             cruiseShip.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(cruiseShip, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(cruiseShip, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the CruiseShip");
                             addVehicleBox(panel);
@@ -521,7 +519,7 @@ public class AddVehicleClass {
                         else {
                             NormalBicycle bicycle = (NormalBicycle) FactoryProvider.getFactory(LAND_VEHICLE).create(NORMAL_BICYCLE, vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText());
                             bicycle.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(bicycle, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(bicycle, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the Bicycle");
                             addVehicleBox(panel);
@@ -537,7 +535,7 @@ public class AddVehicleClass {
                         else {
                             PlayGlider playGlider = (PlayGlider) FactoryProvider.getFactory(AIR_VEHICLE).create(PLAY_GLIDER, "0", vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText());
                             playGlider.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(playGlider, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(playGlider, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the Play Glider");
                             addVehicleBox(panel);
@@ -553,7 +551,7 @@ public class AddVehicleClass {
                         else {
                             SpyGlider spyGlider = (SpyGlider) FactoryProvider.getFactory(AIR_VEHICLE).create(SPAY_GLIDER, "0", vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText());
                             spyGlider.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(spyGlider, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(spyGlider, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the Spy Glider");
                             addVehicleBox(panel);
@@ -571,7 +569,7 @@ public class AddVehicleClass {
                             // TODO Random random = new Random();
                             Amphibious amphibious = (Amphibious) FactoryProvider.getFactory(LAND_VEHICLE).create(AMPHIBIOUS, vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText(), "0", vehicleDataList.get(2).getText(), vehicleDataList.get(3).getText(), vehicleDataList.get(4).getText(), String.valueOf(windDirection), vehicleDataList.get(5).getText(), vehicleDataList.get(6).getText());
                             amphibious.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(amphibious, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(amphibious, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the amphibious");
                             addVehicleBox(panel);
@@ -587,7 +585,7 @@ public class AddVehicleClass {
                         else {
                             Jeep jeep = (Jeep) FactoryProvider.getFactory(LAND_VEHICLE).create(JEEP, vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText(), "0", vehicleDataList.get(2).getText(), "5", vehicleDataList.get(3).getText(), vehicleDataList.get(4).getText(), vehicleDataList.get(5).getText());
                             jeep.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(jeep, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(jeep, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the Jeep");
                             addVehicleBox(panel);
@@ -606,7 +604,7 @@ public class AddVehicleClass {
                             boolean military = optionalParams.first.second;
                             HybridPlane hybridPlane = (HybridPlane) FactoryProvider.getFactory(LAND_VEHICLE).create(HYBRID_PLAIN, vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText(), "0", vehicleDataList.get(2).getText(), vehicleDataList.get(3).getText(), vehicleDataList.get(4).getText(), String.valueOf(civilian), String.valueOf(military), vehicleDataList.get(5).getText(), vehicleDataList.get(6).getText(), String.valueOf(windDirection), vehicleDataList.get(7).getText());
                             hybridPlane.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(hybridPlane, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(hybridPlane, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the hybrid Plane");
                             addVehicleBox(panel);
@@ -622,7 +620,7 @@ public class AddVehicleClass {
                         else {
                             ElectricBicycle electricBicycle = (ElectricBicycle) FactoryProvider.getFactory(LAND_VEHICLE).create(ELECTRIC_BICYCLE, vehicleDataList.get(0).getText(), vehicleDataList.get(1).getText());
                             electricBicycle.setVehiclesImage(vehiclesImage);
-                            Vehicle vehicle = new VehicleColorAndStatusDecorator(electricBicycle, color);
+                            Ivehicle vehicle = new VehicleColorAndStatusDecorator(electricBicycle, color);
                             vehicleList.add(vehicle);
                             JOptionPane.showMessageDialog(null, "You have successfully added the electric bicycle");
                             addVehicleBox(panel);

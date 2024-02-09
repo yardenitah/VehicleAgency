@@ -1,18 +1,14 @@
 package vehicles;
 
-public abstract class VehicleDecorator extends Vehicle implements Ivehicle {
-    protected Vehicle decoratedVehicle;
+public abstract class VehicleDecorator implements Ivehicle {
+    protected Ivehicle decoratedVehicle;
 
-    public VehicleDecorator(Vehicle vehicle){
-        super(vehicle.model, vehicle.kilometers, vehicle.maxKilometers, vehicle.maxOfPassengers, vehicle.maxSpeed);
+    public VehicleDecorator(Ivehicle vehicle){
         this.decoratedVehicle = vehicle;
     }
     @Override
-    public Vehicle makeVehicle() {
+    public Ivehicle makeVehicle() {
         return decoratedVehicle.makeVehicle();
     }
 
-    public Vehicle getDecoratedVehicle() {
-        return decoratedVehicle;
-    }
 }

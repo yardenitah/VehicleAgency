@@ -1,15 +1,16 @@
 package utils;
 
+import vehicles.Ivehicle;
 import vehicles.Vehicle;
 
 import java.util.Vector;
 
 public class Memento {
-    private final Vector<Vehicle> vehicleList;
-    public Memento(Vector<Vehicle> vehicleList) {
+    private final Vector<Ivehicle> vehicleList;
+    public Memento(Vector<Ivehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }
-    public Vector<Vehicle> getState(){
+    public Vector<Ivehicle> getState(){
         return this.vehicleList;
     }
 }
